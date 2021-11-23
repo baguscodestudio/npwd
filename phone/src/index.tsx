@@ -13,6 +13,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import { Theme as MaterialUITheme } from '@mui/material';
 import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
+import RecoilPortal from './utils/RecoilPortal';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -56,6 +57,7 @@ if (process.env.NODE_ENV === 'development') {
 ReactDOM.render(
   <HashRouter>
     <RecoilRoot>
+      <RecoilPortal />
       <PhoneProviders />
     </RecoilRoot>
   </HashRouter>,
