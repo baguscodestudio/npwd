@@ -85,28 +85,16 @@
       "value": "fr"
     },
     {
-      "label": "Türk",
-      "value": "tr"
-    },
-    {
       "label": "Norsk",
       "value": "no"
     },
     {
-      "label": "Svenska",
-      "value": "sv"
+      "label": "Polski",
+      "value": "pl"
     },
     {
       "label": "Português",
       "value": "pt"
-    },
-    {
-      "label": "Português (BR)",
-      "value": "ptbr"
-    },
-    {
-      "label": "Bosanski",
-      "value": "ba"
     },
     {
       "label": "Hungarian",
@@ -123,6 +111,14 @@
     {
       "label": "Deutsch",
       "value": "de"
+    },
+    {
+      "label": "Finnish",
+      "value": "fi"
+    },
+    {
+      "label": "Italian",
+      "value": "it"
     }
   ],
   "ringtones": [

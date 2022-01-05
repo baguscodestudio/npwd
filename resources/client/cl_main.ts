@@ -26,7 +26,16 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
   }
 });
 
-// RegisterKeyMapping('phone', 'Open Phone', 'keyboard', config.general.toggleKey);
+// RegisterKeyMapping(
+//   config.general.toggleCommand,
+//   'Toggle Phone',
+//   'keyboard',
+//   config.general.toggleKey,
+// );
+
+setTimeout(() => {
+  emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
+}, 1000);
 
 const getCurrentGameTime = () => {
   let hour: string | number = GetClockHours();
@@ -78,7 +87,7 @@ on('Phone:radialOpen', async () => {
 });
 
 RegisterCommand(
-  'phone',
+  config.general.toggleCommand,
   async () => {
     //-- Toggles Phone
     // Check to see if the phone is marked as disabled
