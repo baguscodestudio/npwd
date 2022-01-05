@@ -26,7 +26,7 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
   }
 });
 
-RegisterKeyMapping('phone', 'Open Phone', 'keyboard', config.general.toggleKey);
+// RegisterKeyMapping('phone', 'Open Phone', 'keyboard', config.general.toggleKey);
 
 const getCurrentGameTime = () => {
   let hour: string | number = GetClockHours();
@@ -73,6 +73,10 @@ export const hidePhone = async (): Promise<void> => {
  *  Register Command and Keybinding
  *
  * * * * * * * * * * * * */
+on('Phone:radialOpen', async () => {
+  if (!global.isPhoneDisabled) await togglePhone();
+});
+
 RegisterCommand(
   'phone',
   async () => {
