@@ -93,6 +93,10 @@
       "value": "pl"
     },
     {
+      "label": "Bosanski",
+      "value": "ba"
+    },
+    {
       "label": "Português",
       "value": "pt"
     },
@@ -119,6 +123,10 @@
     {
       "label": "Italian",
       "value": "it"
+    },
+    {
+      "label": "Indonesia",
+      "value": "id"
     }
   ],
   "ringtones": [
@@ -156,6 +164,7 @@
       "label": "English",
       "value": "en"
     },
+    "callVolume": 50,
     "iconSet": {
       "label": "Material",
       "value": {

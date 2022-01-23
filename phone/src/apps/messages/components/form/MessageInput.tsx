@@ -2,44 +2,30 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paper, Box, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import ImageIcon from '@mui/icons-material/Image';
-import { Message, MessageEvents } from '@typings/messages';
+import IosShareIcon from '@mui/icons-material/IosShare';
 import { TextField } from '@ui/components/Input';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { ServerPromiseResp } from '@typings/common';
-import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { MessageConversation } from '../../../../../../typings/messages';
 
 interface IProps {
   onAddImageClick(): void;
-  messageConversationId: string | undefined;
+  messageConversation: MessageConversation | undefined;
   messageGroupName: string | undefined;
 }
 
-const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
+const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
   const [t] = useTranslation();
-  const { addAlert } = useSnackbar();
   const [message, setMessage] = useState('');
-  const { updateMessages } = useMessageActions();
+  const { sendMessage } = useMessageAPI();
 
   const handleSubmit = async () => {
     if (message.trim()) {
-      fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
-        conversationId: messageConversationId,
+      await sendMessage({
+        conversationId: messageConversation.conversation_id,
         message,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          setMessage('');
-
-          return addAlert({
-            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
-            type: 'error',
-          });
-        }
-
-        updateMessages(resp.data);
-        setMessage('');
+        tgtPhoneNumber: messageConversation.phoneNumber,
       });
+      setMessage('');
     }
   };
 
@@ -49,7 +35,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     }
   };
 
-  if (!messageConversationId) return null;
+  if (!messageConversation.conversation_id) return null;
 
   return (
     <Paper variant="outlined" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -68,7 +54,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
       </Box>
       <Box>
         <Button onClick={onAddImageClick}>
-          <ImageIcon />
+          <IosShareIcon />
         </Button>
         <Button onClick={handleSubmit}>
           <SendIcon />

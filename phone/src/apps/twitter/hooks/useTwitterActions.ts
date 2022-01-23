@@ -25,7 +25,7 @@ export const useTwitterActions = (): TwitterActionProps => {
         const tweetsLoading = getIsTweetsLoading(snapshot);
         if (tweetsLoading) return;
 
-        set(twitterState.tweets, (curVal) => [...tweet, ...curVal]);
+        set(twitterState.tweets, (curVal) => [...curVal, ...tweet]);
       },
     [setTweets],
   );
@@ -36,9 +36,6 @@ export const useTwitterActions = (): TwitterActionProps => {
         ...curVal,
         profile_name: profile.profile_name,
         avatar_url: profile.avatar_url,
-        bio: profile.bio,
-        location: profile.location,
-        job: profile.job,
       }));
     },
     [setTwitterProfile],

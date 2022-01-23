@@ -8,7 +8,8 @@ import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 export const useMessagesService = () => {
-  const { updateMessages, updateConversations } = useMessageActions();
+  const { updateLocalMessages, updateLocalConversations, setMessageReadState } =
+    useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
   const { visibility } = usePhoneVisibility();
@@ -19,15 +20,17 @@ export const useMessagesService = () => {
       return;
     }
 
+    // Set the current unread count to 1, when they click it will be removed
+    setMessageReadState(conversationId, 1);
     setNotification({ conversationName, conversationId, message });
   };
 
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
-      updateMessages(messageDto);
+      updateLocalMessages(messageDto);
     },
-    [updateMessages],
+    [updateLocalMessages],
   );
 
   const handleAddConversation = useCallback(
@@ -35,15 +38,16 @@ export const useMessagesService = () => {
       const display = getDisplayByNumber(conversation.phoneNumber);
       const avatar = getPictureByNumber(conversation.phoneNumber);
 
-      updateConversations({
+      updateLocalConversations({
         phoneNumber: conversation.phoneNumber,
         conversation_id: conversation.conversation_id,
+        updatedAt: conversation.updatedAt,
         avatar,
         unread: 0,
         display,
       });
     },
-    [updateConversations, getDisplayByNumber, getPictureByNumber],
+    [updateLocalConversations, getDisplayByNumber, getPictureByNumber],
   );
 
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
