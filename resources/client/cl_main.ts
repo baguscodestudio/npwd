@@ -111,7 +111,8 @@ RegisterCommand(
  *
  * * * * * * * * * * * * */
 
-const checkExportCanOpen = async (): Promise<boolean> => {
+export const checkHasPhone = async (): Promise<boolean> => {
+  if (!config.PhoneAsItem.enabled) return true;
   const exportResp = await Promise.resolve(
     exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction](),
   );
@@ -123,10 +124,8 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
-  if (config.PhoneAsItem.enabled) {
-    const canAccess = await checkExportCanOpen();
-    if (!canAccess) return;
-  }
+  const canAccess = await checkHasPhone();
+  if (!canAccess) return;
   if (global.isPhoneOpen) return await hidePhone();
   await showPhone();
 }
@@ -168,6 +167,26 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
     cb({});
   },
 );
+
+/* * * * * * * * * * * * *
+ *
+ *  PhoneAsItem Export Checker
+ *
+ * * * * * * * * * * * * */
+if (config.PhoneAsItem.enabled) {
+  setTimeout(() => {
+    let doesExportExist = false;
+
+    const { exportResource, exportFunction } = config.PhoneAsItem;
+    emit(`__cfx_export_${exportResource}_${exportFunction}`, () => {
+      doesExportExist = true;
+    });
+
+    if (!doesExportExist) {
+      console.log('\n^1Incorrect PhoneAsItem configuration detected. Export does not exist.^0\n');
+    }
+  }, 100);
+}
 
 // setTick(async () => {
 //   while (config.SwimDestroy) {

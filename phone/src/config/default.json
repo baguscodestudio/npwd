@@ -19,6 +19,10 @@
       "value": "projecterror.jpg"
     },
     {
+      "label": "NPWD 2020",
+      "value": "npwd2020.png"
+    },
+    {
       "label": "Default",
       "value": "default.jpg"
     }
@@ -127,6 +131,22 @@
     {
       "label": "Indonesia",
       "value": "id"
+    },
+    {
+      "label": "繁體中文",
+      "value": "zhtw"
+    },
+    {
+      "label": "Русский",
+      "value": "ru"
+    },
+    {
+      "label": "Svenska",
+      "value": "sv"
+    },
+    {
+      "label": "Türkçe",
+      "value": "tr"
     }
   ],
   "ringtones": [
@@ -209,7 +229,8 @@
       "value": "online"
     },
     "TWITTER_notiSoundVol": 25,
-    "TWITTER_notifyNewFeedTweet": true
+    "TWITTER_notifyNewFeedTweet": true,
+    "MARKETPLACE_notifyNewListing": true
   },
   "appSettings": {
     "browserHomePage": "https://docs.projecterror.dev"
